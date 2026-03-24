@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AgriMinds Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/your-kit.js" crossorigin="anonymous"></script>
+
+  <style>
+    /* Interactive sections styling */
+    .content-section {
+      display: none;
+      padding: 20px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      margin: 20px 0;
+    }
+    .content-section.active {
+      display: block;
+      animation: fadeIn 0.4s ease;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+    label {
+      font-weight: bold;
+      margin-top: 10px;
+      display: block;
+    }
+    input, select, button {
+      display: block;
+      margin: 8px 0;
+      padding: 10px;
+      width: 100%;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #45a049;
+    }
+    #plantList {
+      margin-top: 15px;
+      font-style: italic;
+      color: #2e7d32;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ================= HERO ================= -->
+<header class="hero">
+  <nav class="navbar">
+    <div class="logo">🌱 AgriMinds</div>
+    <ul class="nav-links">
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Features</a></li>
+      <li><a href="#">How it Works</a></li>
+      <li><a href="#">Dashboard</a></li>
+      <li><a href="#" class="btn">Get Started</a></li>
+    </ul>
+  </nav>
+
+  <div class="hero-content">
+    <div class="hero-text">
+      <h1>Smart AI for <br> Intelligent Crop Care</h1>
+      <p>
+        Manage your plants, diagnose diseases, and get AI-powered crop 
+        recommendations — all in one intelligent dashboard.
+      </p>
+
+      <div class="hero-buttons">
+        <a href="#dashboard" class="primary-btn">Explore Dashboard</a>
+        <a href="#" class="secondary-btn">Learn More</a>
+      </div>
+    </div>
+
+    <div class="hero-image">
+      <img src="https://i.ibb.co/s9PFvMmM/b071e1da64ded30817d2114364848f82.jpg" alt="Hero Image">
+    </div>
+  </div>
+</header>
+
+<!-- ================= INTRO ================= -->
+<section class="intro" id="dashboard">
+  <div class="intro-left">
+    <span class="tag">AI Powered Agriculture</span>
+    <h2>Your Digital Assistant for <br> Smarter Farming</h2>
+    <p>
+      AgriMind Dashboard combines artificial intelligence with real-time insights 
+      to help farmers and plant enthusiasts monitor, diagnose, and optimize plant 
+      growth effortlessly.
+    </p>
+  </div>
+
+  <div class="intro-right">
+    <div class="feature-card" onclick="showSection('add')">
+      <i class="fas fa-seedling"></i>
+      <h4>Add Plants</h4>
+      <p>Register and track your crops easily.</p>
+    </div>
+
+    <div class="feature-card" onclick="showSection('ai')">
+      <i class="fas fa-robot"></i>
+      <h4>AI Assistant</h4>
+      <p>Ask anything about plant care instantly.</p>
+    </div>
+
+    <div class="feature-card" onclick="showSection('diagnose')">
+      <i class="fas fa-leaf"></i>
+      <h4>Diagnose</h4>
+      <p>Detect plant diseases from images.</p>
+    </div>
+
+    <div class="feature-card" onclick="showSection('recommend')">
+      <i class="fas fa-tractor"></i>
+      <h4>Recommendations</h4>
+      <p>Get best crops based on your region.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= INTERACTIVE SECTIONS ================= -->
+<div id="add" class="content-section">
+  <h3>Add Plant</h3>
+  <form onsubmit="event.preventDefault(); addPlant();">
+    <label for="plantName">Plant Name</label>
+    <input type="text" id="plantName" placeholder="e.g. Tomato">
+    <label for="plantType">Plant Type</label>
+    <input type="text" id="plantType" placeholder="e.g. Vegetable">
+    <label for="plantCity">City</label>
+    <input type="text" id="plantCity" placeholder="e.g. Noida">
+    <button type="submit">Add Plant</button>
+  </form>
+  <p id="plantList"></p>
+</div>
+
+<div id="ai" class="content-section">
+  <h3>AI Assistant</h3>
+  <input type="text" placeholder="Ask any plant care question">
+  <button>Talk to AI</button>
+</div>
+
+<div id="diagnose" class="content-section">
+  <h3>Diagnose Plant</h3>
+  <input type="text" placeholder="Plant Name">
+  <input type="file">
+  <button>Upload & Diagnose</button>
+</div>
+
+<div id="recommend" class="content-section">
+  <h3>Recommended Crops</h3>
+  <input type="text" placeholder="City">
+  <select><option>Spring</option><option>Summer</option><option>Winter</option></select>
+  <select><option>Vegetables</option><option>Fruits</option><option>Grains</option></select>
+  <button>Get Recommendation</button>
+</div>
+
+<!-- ================= FLOATING AI BUTTON ================= -->
+<div class="ai-toggle" onclick="toggleAI()">🌿</div>
+
+<!-- ================= POPUP CHATBOT ================= -->
+<div class="ai-popup" id="aiPopup">
+  <div class="ai-header">
+    <div class="ai-header-left">
+      <img src="https://cdn-icons-png.flaticon.com/512/2909/2909767.png" class="ai-logo">
+      <div><h3>Agri AI</h3><span>Online</span></div>
+    </div>
+    <span class="close-btn" onclick="toggleAI()">✖</span>
+  </div>
+  <div class="ai-body">
+    <p class="ai-intro">🌱 Ask anything about crops, soil, or plant health.</p>
+    <div class="copilot-wrapper">
+      <div class="copilot-box"><input type="text" placeholder="Type your question..." /></div>
+      <div class="copilot-side"><button class="tools-btn">⚙</button><button class="send-btn">➤</button></div>
+    </div>
+  </div>
+</div>
+
+<script>
+function toggleAI() {
+  const popup = document.getElementById("aiPopup");
+  popup.classList.toggle("active");
+}
+
+function showSection(id) {
+  document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function addPlant() {
+  const name = document.getElementById('plantName').value;
+  const type = document.getElementById('plantType').value;
+  const city = document.getElementById('plantCity').value;
+  if(name && type && city) {
+    document.getElementById('plantList').innerText = `✅ Added Plant: ${name} (${type}) in ${city}`;
+  } else {
+    alert("Please fill all fields!");
+  }
+}
+</script>
+</body>
+</html>
+
