@@ -15,50 +15,91 @@
   <script src="https://kit.fontawesome.com/your-kit.js" crossorigin="anonymous"></script>
 
   <style>
-    /* Interactive sections styling */
-    .content-section {
-      display: none;
-      padding: 20px;
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      margin: 20px 0;
-    }
-    .content-section.active {
-      display: block;
-      animation: fadeIn 0.4s ease;
-    }
-    @keyframes fadeIn {
-      from {opacity: 0;}
-      to {opacity: 1;}
-    }
-    label {
-      font-weight: bold;
-      margin-top: 10px;
-      display: block;
-    }
-    input, select, button {
-      display: block;
-      margin: 8px 0;
-      padding: 10px;
-      width: 100%;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-    button {
-      background: #4CAF50;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #45a049;
-    }
-    #plantList {
-      margin-top: 15px;
-      font-style: italic;
-      color: #2e7d32;
-    }
+    /* ================= AI STYLE THEME ================= */
+.content-section {
+  display: none;
+  padding: 25px;
+  border-radius: 25px;
+  margin: 20px 0;
+
+  background: linear-gradient(180deg, #071a0c, #0b2a13);
+  color: #d6eacb;
+
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+
+.content-section.active {
+  display: block;
+  animation: fadeIn 0.4s ease;
+}
+
+/* ================= TEXT ================= */
+h3 {
+  color: #b7d77a;
+  margin-bottom: 10px;
+}
+
+label {
+  font-weight: 500;
+  color: #9fb59a;
+  margin-top: 12px;
+}
+
+/* ================= INPUT FIELD ================= */
+input, select {
+  width: 100%;
+  padding: 14px 18px;
+  margin: 10px 0;
+
+  border-radius: 40px;
+  border: 2px solid #b7d77a;
+
+  background: #163a1a;
+  color: #d6eacb;
+
+  outline: none;
+  transition: 0.3s;
+}
+
+/* Placeholder */
+input::placeholder {
+  color: #8fa88c;
+}
+
+/* Glow on focus */
+input:focus, select:focus {
+  border-color: #d4ff7f;
+  box-shadow: 0 0 10px rgba(183, 215, 122, 0.5);
+}
+
+/* ================= BUTTON ================= */
+button {
+  margin-top: 15px;
+  padding: 12px;
+  border-radius: 50px;
+
+  background: linear-gradient(135deg, #7fa34c, #a4d65e);
+  color: #0b2a13;
+
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+}
+
+/* Hover effect */
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 20px rgba(127, 163, 76, 0.6);
+}
+
+/* ================= PLANT LIST ================= */
+#plantList {
+  margin-top: 15px;
+  color: #b7d77a;
+  font-size: 14px;
+}
   </style>
 </head>
 
@@ -66,8 +107,8 @@
 
 <!-- ================= HERO ================= -->
 <header class="hero">
-  <nav class="navbar">
-    <div class="logo">🌱 AgriMinds</div>
+  <nav class="navbar glass">
+    <div class="logo">🌱 Agri माइंड्स</div>
     <ul class="nav-links">
       <li><a href="#">Home</a></li>
       <li><a href="#">Features</a></li>
@@ -79,7 +120,9 @@
 
   <div class="hero-content">
     <div class="hero-text">
-      <h1>Smart AI for <br> Intelligent Crop Care</h1>
+      <h1>Smart AI for <br> Intelligent<span class="crop-care"> Crop Care</span></h1>
+
+
       <p>
         Manage your plants, diagnose diseases, and get AI-powered crop 
         recommendations — all in one intelligent dashboard.
@@ -116,11 +159,7 @@
       <p>Register and track your crops easily.</p>
     </div>
 
-    <div class="feature-card" onclick="showSection('ai')">
-      <i class="fas fa-robot"></i>
-      <h4>AI Assistant</h4>
-      <p>Ask anything about plant care instantly.</p>
-    </div>
+    
 
     <div class="feature-card" onclick="showSection('diagnose')">
       <i class="fas fa-leaf"></i>
@@ -128,14 +167,23 @@
       <p>Detect plant diseases from images.</p>
     </div>
 
-    <div class="feature-card" onclick="showSection('recommend')">
+    <div class="feature-card recommend-card" onclick="showSection('recommend')">
       <i class="fas fa-tractor"></i>
       <h4>Recommendations</h4>
       <p>Get best crops based on your region.</p>
     </div>
   </div>
 </section>
-
+<!-- ================= TRANSLATION BUTTON ================= -->
+<div class="lang-toggle" onclick="toggleLang()">🌐</div>
+<div class="lang-popup" id="langPopup">
+  <div class="lang-option" onclick="setLang('en')">
+    <span>🇺🇸</span> English
+  </div>
+  <div class="lang-option" onclick="setLang('hi')">
+    <span>🇮🇳</span> हिंदी
+  </div>
+</div>
 <!-- ================= INTERACTIVE SECTIONS ================= -->
 <div id="add" class="content-section">
   <h3>Add Plant</h3>
@@ -192,29 +240,19 @@
     </div>
   </div>
 </div>
+<div id="popupModal" class="modal">
+  <div class="modal-content">
 
-<script>
-function toggleAI() {
-  const popup = document.getElementById("aiPopup");
-  popup.classList.toggle("active");
-}
+    <span class="close-btn" onclick="closeModal()">✖</span>
 
-function showSection(id) {
-  document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-}
+    <div id="modalBody">
+      <!-- Dynamic content will come here -->
+    </div>
 
-function addPlant() {
-  const name = document.getElementById('plantName').value;
-  const type = document.getElementById('plantType').value;
-  const city = document.getElementById('plantCity').value;
-  if(name && type && city) {
-    document.getElementById('plantList').innerText = `✅ Added Plant: ${name} (${type}) in ${city}`;
-  } else {
-    alert("Please fill all fields!");
-  }
-}
-</script>
+  </div>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
 
