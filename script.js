@@ -40,20 +40,47 @@ function showSection(type) {
   content = `
     <h2>🌾 Crop Recommendations</h2>
 
-    <label>City</label>
-    <input id="recCity" type="text" placeholder="e.g. Delhi">
-
-    <label>Soil Type</label>
+    <!-- Soil Type -->
+    <label>🌱 Soil Type (India)</label>
     <select id="soilType">
-      <option value="">Select Soil Type</option>
-      <option value="loamy">Loamy</option>
-      <option value="clay">Clay</option>
-      <option value="sandy">Sandy</option>
-      <option value="black">Black Soil</option>
-      <option value="red">Red Soil</option>
+      <option value="">--- Select Soil Type ---</option>
+      <option value="alluvial">Alluvial Soil (Punjab, UP, Bihar)</option>
+      <option value="black">Black Soil (Maharashtra, MP, Gujarat)</option>
+      <option value="red">Red Soil (Tamil Nadu, Karnataka)</option>
+      <option value="laterite">Laterite Soil (Kerala, Odisha)</option>
+      <option value="desert">Desert Soil (Rajasthan)</option>
+      <option value="mountain">Mountain Soil (Himalayas)</option>
+      <option value="peaty">Peaty Soil (Kerala, Odisha deltas)</option>
+      <option value="saline">Saline Soil (Gujarat, UP)</option>
+      <option value="alkaline">Alkaline Soil (Haryana, Punjab)</option>
+      <option value="forest-loamy">Forest Loamy Soil (NE India)</option>
+      <option value="coastal-sandy">Coastal Sandy Soil (Tamil Nadu)</option>
+      <option value="deltaic">Deltaic Alluvial (Sundarbans)</option>
+    </select>
+    
+    <!-- Soil Quality -->
+    <label>🌿 Soil Quality</label>
+    <select id="recSoilQuality">
+      <option value="">--- Select Soil Quality ---</option>
+      <option value="nitrogen">Nitrogen-rich</option>
+      <option value="phosphorus">Phosphorus-rich</option>
+      <option value="potassium">Potassium-rich</option>
+      <option value="balanced">Balanced</option>
     </select>
 
-    <button onclick="getRecommendation()">Get Crops</button>
+    <!-- Soil Content / Texture -->
+    <label>🟤 Soil Texture / Content</label>
+    <select id="recSoilContent">
+      <option value="">--- Select Soil Texture ---</option>
+      <option value="sandy">Sandy (fast drainage, low nutrients)</option>
+      <option value="silty">Silty (smooth, fertile, retains moisture)</option>
+      <option value="clayey">Clayey (dense, retains water, slow drainage)</option>
+      <option value="loamy">Loamy (balanced sand, silt, clay; fertile)</option>
+      <option value="peaty">Peaty (high organic matter, acidic)</option>
+      <option value="chalky">Chalky (alkaline, stony, drains quickly)</option>
+    </select>
+
+    <button onclick="getRecommendation()">Get Recommendation</button>
 
     <p id="resultBox" style="margin-top:15px;"></p>
   `;
@@ -99,34 +126,126 @@ function addPlant() {
   displayPlants();
   clearInputs();
 }
+function showContent(type) {
+  let content = "";
+
+  if (type === "recommend") {
+    content = `
+      <h2>🌾 Crop Recommendations</h2>
+
+      <!-- Soil Type -->
+      <label>🌱 Soil Type (India)</label>
+      <select id="soilType">
+        <option value="">--- Select Soil Type ---</option>
+        <option value="alluvial">🌾 Alluvial Soil (Punjab, UP, Bihar)</option>
+        <option value="black">🖤 Black Soil (Maharashtra, MP, Gujarat)</option>
+        <option value="red">🟥 Red Soil (Tamil Nadu, Karnataka)</option>
+        <option value="laterite">🟫 Laterite Soil (Kerala, Odisha)</option>
+        <option value="desert">🏜️ Desert Soil (Rajasthan)</option>
+        <option value="mountain">⛰️ Mountain Soil (Himalayas)</option>
+        <option value="peaty">🟫 Peaty Soil (Kerala, Odisha deltas)</option>
+        <option value="saline">💧 Saline Soil (Gujarat, UP)</option>
+        <option value="alkaline">⚪ Alkaline Soil (Haryana, Punjab)</option>
+        <option value="forest-loamy">🌳 Forest Loamy Soil (NE India)</option>
+        <option value="coastal-sandy">🏖️ Coastal Sandy Soil (Tamil Nadu)</option>
+        <option value="deltaic">🌊 Deltaic Alluvial (Sundarbans)</option>
+      </select>
+
+      <!-- Soil Quality -->
+      <label>🌿 Soil Quality</label>
+      <select id="recSoilQuality">
+        <option value="">--- Select Soil Quality ---</option>
+        <option value="nitrogen">💪 Nitrogen-rich</option>
+        <option value="phosphorus">⚡ Phosphorus-rich</option>
+        <option value="potassium">🔥 Potassium-rich</option>
+        <option value="balanced">✅ Balanced</option>
+      </select>
+
+      <!-- Soil Content / Texture -->
+      <label>🪨 Soil Content / Texture</label>
+      <select id="recSoilContent">
+        <option value="">--- Select Soil Texture ---</option>
+        <option value="sandy">🏖️ Sandy (fast drainage, low nutrients)</option>
+        <option value="silty">💧 Silty (smooth, fertile, retains moisture)</option>
+        <option value="clayey">🧱 Clayey (dense, retains water, slow drainage)</option>
+        <option value="loamy">🌾 Loamy (balanced sand, silt, clay; fertile)</option>
+        <option value="peaty">🟫 Peaty (high organic matter, acidic)</option>
+        <option value="chalky">⚪ Chalky (alkaline, stony, drains quickly)</option>
+      </select>
+
+      <button onclick="getRecommendation()">Get Recommendation</button>
+
+      <p id="resultBox" style="margin-top:15px;"></p>
+    `;
+  }
+
+  document.getElementById("recommend").innerHTML = content;
+}
 
 function getRecommendation() {
-  const city = document.getElementById("recCity").value.toLowerCase();
-  const soil = document.getElementById("soilType").value;
+  const soilType = document.getElementById("soilType").value;
+  const soilQuality = document.getElementById("recSoilQuality").value;
+  const soilContent = document.getElementById("recSoilContent").value;
+
   const resultBox = document.getElementById("resultBox");
 
-  if (!city || !soil) {
+  if (!soilType || !soilQuality || !soilContent) {
     resultBox.innerHTML = "⚠️ Please fill all fields!";
     return;
   }
 
   let crops = "";
 
-  // 🌱 Simple logic (you can upgrade later)
-  if (soil === "loamy") {
-    crops = "Wheat, Sugarcane, Cotton";
-  } else if (soil === "clay") {
-    crops = "Rice, Broccoli";
-  } else if (soil === "sandy") {
-    crops = "Carrots, Peanuts, Watermelon";
-  } else if (soil === "black") {
-    crops = "Cotton, Soybean";
-  } else if (soil === "red") {
-    crops = "Millets, Pulses";
+  switch (soilType) {
+    case "alluvial":
+      crops = "Rice, Wheat, Sugarcane — fertile, well-drained soil";
+      break;
+    case "black":
+      crops = "Cotton, Soybean, Sunflower — retains moisture, rich in clay";
+      break;
+    case "red":
+      crops = "Millets, Pulses, Groundnut — acidic, moderate fertility";
+      break;
+    case "laterite":
+      crops = "Cashew, Coffee, Tea — rich in iron and aluminum";
+      break;
+    case "desert":
+      crops = "Millets, Barley — low moisture, requires irrigation";
+      break;
+    case "mountain":
+      crops = "Potatoes, Apple, Tea — sloped terrain, drainage important";
+      break;
+    case "peaty":
+      crops = "Rice, Oil Palm — high organic matter, acidic soil";
+      break;
+    case "saline":
+      crops = "Barley, Cotton — tolerant crops, needs salt management";
+      break;
+    case "alkaline":
+      crops = "Wheat, Mustard — requires proper pH adjustment";
+      break;
+    case "forest-loamy":
+      crops = "Spices, Vegetables — nutrient-rich, good organic content";
+      break;
+    case "coastal-sandy":
+      crops = "Coconut, Cashew — drains quickly, requires irrigation";
+      break;
+    case "deltaic":
+      crops = "Rice, Fish Farming — nutrient-rich, waterlogged tolerant";
+      break;
+    default:
+      crops = "No recommendation available";
   }
 
-  resultBox.innerHTML = `🌾 Recommended crops for <b>${city}</b> (${soil} soil): <br> ${crops}`;
+  resultBox.innerHTML = `
+    🌾 Recommended crops for <b>${soilType}</b> soil 
+    (${soilQuality}, ${soilContent}): <br> ${crops}
+  `;
 }
+
+// Initialize
+showContent("recommend");
+
 
 function displayPlants() {
   const list = document.getElementById("plantList");
@@ -251,6 +370,47 @@ document.addEventListener('click', (e) => {
     langPopup.classList.remove('active');
   }
 });
+
+/* ================= AI CHATBOT ================= */
+// Send message when send button clicked
+document.querySelector('.send-btn').addEventListener('click', sendMessage);
+
+// Send message on Enter key
+document.getElementById('chatInput').addEventListener('keypress', function(e){
+  if(e.key === 'Enter') sendMessage();
+});
+
+function sendMessage() {
+  const input = document.getElementById('chatInput');
+  const chatBox = document.getElementById('chatBox');
+  const message = input.value.trim();
+  if(!message) return;
+
+  // User message
+  const userMsg = document.createElement('div');
+  userMsg.textContent = "🧑 " + message;
+  chatBox.appendChild(userMsg);
+
+  // Bot response
+  const botMsg = document.createElement('div');
+  botMsg.textContent = "🤖 " + getSmartReply(message);
+  chatBox.appendChild(botMsg);
+
+  // Scroll down
+  chatBox.scrollTop = chatBox.scrollHeight;
+
+  // Clear input
+  input.value = "";
+}
+
+// Example AI response logic
+function getSmartReply(msg) {
+  msg = msg.toLowerCase();
+  if(msg.includes("tomato")) return "Tomatoes need 6-8 hours of sunlight and well-drained soil.";
+  if(msg.includes("water")) return "Water when top soil feels dry. Avoid overwatering.";
+  if(msg.includes("fertilizer")) return "Use compost or NPK every 2-3 weeks.";
+  return "I am here to help! Ask me about your plants or soil.";
+}
 
 // Load saved language
 document.documentElement.lang = localStorage.getItem('lang') || 'en';
