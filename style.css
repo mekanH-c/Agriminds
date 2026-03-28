@@ -489,6 +489,24 @@ body {
   font-size: 18px;
 }
 
+
+#popupModal .modal-content {
+  max-height: 80vh;        
+  overflow-y: auto;        
+  padding-right: 10px; 
+}
+
+
+#popupModal .modal-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+#popupModal .modal-content::-webkit-scrollbar-thumb {
+  background: #7fa34c;
+  border-radius: 10px;
+}
+
+
 /* ================= RESPONSIVE ================= */
 @media (max-width: 768px) {
   .navbar {
