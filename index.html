@@ -37,13 +37,7 @@ button:hover { transform: scale(1.05); box-shadow: 0 5px 20px rgba(127, 163, 76,
 <header class="hero">
   <nav class="navbar glass">
     <div class="logo">🌱 Agri माइंड्स</div>
-    <ul class="nav-links">
-      <li><a href="#">Home</a></li>
-      <li><a href="#">Features</a></li>
-      <li><a href="#">How it Works</a></li>
-      <li><a href="#">Dashboard</a></li>
-      <li><a href="#" class="btn">Get Started</a></li>
-    </ul>
+    
   </nav>
   <div class="hero-content">
     <div class="hero-text">
@@ -140,27 +134,14 @@ button:hover { transform: scale(1.05); box-shadow: 0 5px 20px rgba(127, 163, 76,
     <option value="deltaic">Deltaic Alluvial (Sundarbans)</option>
   </select>
   <label for="recSoilQuality">Soil Quality</label>
-  <select id="recSoilQuality">
-    <option value="">Select Soil Quality</option>
+  <select id="recSoilNutrient">
+    <option value="">Select Nutrient Analysis</option>
     <option value="nitrogen">Nitrogen-rich</option>
     <option value="phosphorus">Phosphorus-rich</option>
     <option value="potassium">Potassium-rich</option>
     <option value="balanced">Balanced</option>
   </select>
-  <label>🪨 Soil Content / Texture</label>
-  <select id="recSoilContent">
-    <option value="">--- Select Soil Content ---</option>
-    <option value="sandy">Sandy</option>
-    <option value="loamy">Loamy</option>
-    <option value="clay">Clay</option>
-    <option value="silt">Silt</option>
-    <option value="peaty">Peaty</option>
-    <option value="chalky">Chalky</option>
-    <option value="saline">Saline</option>
-    <option value="alluvial">Alluvial Mix</option>
-    <option value="forest-loamy">Forest Loamy Mix</option>
-    <option value="deltaic">Deltaic Alluvial</option>
-  </select>
+
   <button onclick="getRecommendation()">Get Recommendation</button>
   <p id="resultBox" style="margin-top:15px;"></p>
 </div>

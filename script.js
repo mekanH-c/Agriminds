@@ -59,26 +59,16 @@ function showSection(type) {
     </select>
     
     <!-- Soil Quality -->
-    <label>🌿 Soil Quality</label>
-    <select id="recSoilQuality">
-      <option value="">--- Select Soil Quality ---</option>
+    <label>🌿 Soil Nutrient Analysis</label>
+    <select id="recSoilNutrient">
+      <option value="">--- Select Nutrient Analysis  ---</option>
       <option value="nitrogen">Nitrogen-rich</option>
       <option value="phosphorus">Phosphorus-rich</option>
       <option value="potassium">Potassium-rich</option>
       <option value="balanced">Balanced</option>
     </select>
 
-    <!-- Soil Content / Texture -->
-    <label>🟤 Soil Texture / Content</label>
-    <select id="recSoilContent">
-      <option value="">--- Select Soil Texture ---</option>
-      <option value="sandy">Sandy (fast drainage, low nutrients)</option>
-      <option value="silty">Silty (smooth, fertile, retains moisture)</option>
-      <option value="clayey">Clayey (dense, retains water, slow drainage)</option>
-      <option value="loamy">Loamy (balanced sand, silt, clay; fertile)</option>
-      <option value="peaty">Peaty (high organic matter, acidic)</option>
-      <option value="chalky">Chalky (alkaline, stony, drains quickly)</option>
-    </select>
+    
 
     <button onclick="getRecommendation()">Get Recommendation</button>
 
@@ -151,9 +141,9 @@ function showContent(type) {
         <option value="deltaic">🌊 Deltaic Alluvial (Sundarbans)</option>
       </select>
 
-      <!-- Soil Quality -->
-      <label>🌿 Soil Quality</label>
-      <select id="recSoilQuality">
+      <!-- Soil Nutrient Analysis -->
+      <label>🌿 Soil Nutrient Analysis</label>
+      <select id="recSoilNutrient">
         <option value="">--- Select Soil Quality ---</option>
         <option value="nitrogen">💪 Nitrogen-rich</option>
         <option value="phosphorus">⚡ Phosphorus-rich</option>
@@ -161,17 +151,7 @@ function showContent(type) {
         <option value="balanced">✅ Balanced</option>
       </select>
 
-      <!-- Soil Content / Texture -->
-      <label>🪨 Soil Content / Texture</label>
-      <select id="recSoilContent">
-        <option value="">--- Select Soil Texture ---</option>
-        <option value="sandy">🏖️ Sandy (fast drainage, low nutrients)</option>
-        <option value="silty">💧 Silty (smooth, fertile, retains moisture)</option>
-        <option value="clayey">🧱 Clayey (dense, retains water, slow drainage)</option>
-        <option value="loamy">🌾 Loamy (balanced sand, silt, clay; fertile)</option>
-        <option value="peaty">🟫 Peaty (high organic matter, acidic)</option>
-        <option value="chalky">⚪ Chalky (alkaline, stony, drains quickly)</option>
-      </select>
+      
 
       <button onclick="getRecommendation()">Get Recommendation</button>
 
@@ -184,12 +164,11 @@ function showContent(type) {
 
 function getRecommendation() {
   const soilType = document.getElementById("soilType").value;
-  const soilQuality = document.getElementById("recSoilQuality").value;
-  const soilContent = document.getElementById("recSoilContent").value;
+  const soilQuality = document.getElementById("recSoilNutrient").value;
 
   const resultBox = document.getElementById("resultBox");
 
-  if (!soilType || !soilQuality || !soilContent) {
+  if (!soilType || !soilNutrient) {
     resultBox.innerHTML = "⚠️ Please fill all fields!";
     return;
   }
@@ -239,7 +218,7 @@ function getRecommendation() {
 
   resultBox.innerHTML = `
     🌾 Recommended crops for <b>${soilType}</b> soil 
-    (${soilQuality}, ${soilContent}): <br> ${crops}
+    (${soilNutrient}): <br> ${crops}
   `;
 }
 

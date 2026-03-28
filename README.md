@@ -17,8 +17,9 @@
 *   **Instant Results**: AI-powered disease identification and treatment
 
 ### 4. **Smart Crop Recommendations**
-*   **Location-Based**: Perfect crops for your city and season
-*   **Soil-Optimized**: Matches recommendations to soil type (loamy, clay, sandy, etc.)
+*   **Indian soil types** (Alluvial, Black, Red, etc.)
+*   **Soil nutrients** (Nitrogen, Phosphorus, Potassium)
+*   **Provides crop** suggestions tailored to Indian agriculture conditions
 
 ### 5. **Interactive Dashboard**
 *   **Glassmorphism UI**: Modern, translucent design with smooth animations
